@@ -29,23 +29,31 @@ class StatusUpdateView(View):
                 msg = form.cleaned_data.get('message')
                 image_url = form.cleaned_data.get('image_url')
                 print(msg)
+                print(image_url)
 
                 # Facebook API call
-                graph = facebook.GraphAPI(self.cfg["access_token"])
+                graph = facebook.GraphAPI(cfg["access_token"])
                 resp = graph.get_object('me/accounts')
                 page_access_token = None
 
                 for page in resp['data']:
-                    if page['id'] == self.cfg['page_id']:
+                    if page['id'] == cfg['page_id']:
                         page_access_token = page['access_token']
 
                 graph = facebook.GraphAPI(page_access_token)
 
-                # Status Posting with API
-                status = graph.put_object(
-                    parent_object = "me",
-                    connection_name = "feed",
-                    message=msg)
+                if msg and not image_url:                    
+                    status = graph.put_object(
+                        parent_object = "me",
+                        connection_name = "feed",
+                        message=msg)
+                elif msg and image_url:
+                    status = graph.put_object(
+                        parent_object = "me",
+                        connection_name = "photos",
+                        url = image_url,
+                        message=msg
+                        )
 
                 context['status'] = 'success'
                 return render(request, self.template_name, context)
