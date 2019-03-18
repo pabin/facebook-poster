@@ -11,3 +11,7 @@ tokens.py
 *.scss
 
 
+# Database stuff
+*.sqlite3
+migrations/
+db.sqlite3
