@@ -5,7 +5,7 @@ import facebook
 from .forms import (
     StatusUpdateForm,
 )
-from .tokens import cfg
+from .tokens import token, page_id
 
 class StatusUpdateView(View):
     template_name = 'home/home.html'
@@ -32,28 +32,31 @@ class StatusUpdateView(View):
                 print(image_url)
 
                 # Facebook API call
-                graph = facebook.GraphAPI(cfg["access_token"])
+                graph = facebook.GraphAPI(token["access_token"])
                 resp = graph.get_object('me/accounts')
-                page_access_token = None
 
-                for page in resp['data']:
-                    if page['id'] == cfg['page_id']:
-                        page_access_token = page['access_token']
 
-                graph = facebook.GraphAPI(page_access_token)
+                for key, value in page_id.items():
+                    page_access_token = None
+                    for page in resp['data']:
+                        if page['id'] == value:
+                            page_access_token = page['access_token']
 
-                if msg and not image_url:                    
-                    status = graph.put_object(
-                        parent_object = "me",
-                        connection_name = "feed",
-                        message=msg)
-                elif msg and image_url:
-                    status = graph.put_object(
-                        parent_object = "me",
-                        connection_name = "photos",
-                        url = image_url,
-                        message=msg
-                        )
+                    graph = facebook.GraphAPI(page_access_token)
+
+                    if msg and not image_url:
+                        status = graph.put_object(
+                            parent_object = "me",
+                            connection_name = "feed",
+                            message=msg)
+
+                    elif msg and image_url:
+                        status = graph.put_object(
+                            parent_object = "me",
+                            connection_name = "photos",
+                            url = image_url,
+                            message=msg)
+
 
                 context['status'] = 'success'
                 return render(request, self.template_name, context)
