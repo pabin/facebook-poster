@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.views import View
 import facebook
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import (
     StatusUpdateForm,
 )
 from .tokens import token, page_id
 
-class StatusUpdateView(View):
+class StatusUpdateView(LoginRequiredMixin, View):
     template_name = 'home/home.html'
     form_class = StatusUpdateForm
 

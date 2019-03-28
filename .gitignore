@@ -13,5 +13,4 @@ tokens.py
 
 # Database stuff
 *.sqlite3
-migrations/
 db.sqlite3

@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>POST PRO LOGIN</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="icon" type="image/png" sizes="64x64" href="{% static 'image/favicon.png' %}">
+
+  </head>
+
+  <body style="background-color: #3A3A3A;">
+     <div class="col-sm-12">
+       <div class="row">
+         <div class="col-sm-4">
+         </div>
+
+         <div class="col-sm-4">
+           <div class="row" style="margin-top: 50px;">
+             <div class="col-sm-12" style="background-color: white;"><br>
+               <div class="col-sm-12">
+                  <img style="display:block;  margin:0 auto; height: 150px; widht: 150px;" src="{% static 'image/logo.png' %}" alt=""/>
+
+                     <form class="" role="form" method="post">
+                         {% csrf_token %}
+                         <br>
+
+                       {% for field in form %}
+                       <div class="row">
+                             <div class="col-sm-4">
+                                 <label>{{field.label}}</label>
+                             </div>
+                             <div class="col-sm-8">
+                                 <div class="form-group {% if field.errors %}has-error{% endif %}">
+                                     {{ field }} {% if field.errors %}
+                                     <span class="help-block">{{ field.errors.as_text }}</span> {% endif %}
+                                 </div>
+                           </div>
+                       </div>
+                       {% endfor %}
+
+                       <div class="row">
+                         <div class="col-sm-12">
+                           {% if login_failure %}
+                             <div class="alert alert-danger" role="alert">
+                              Invalid Login Credentials! Try Again!
+                            </div>
+                           {% endif %}
+                         </div>
+                       </div>
+
+                       <div class="row">
+                         <div class="col-sm-12">
+                             <button type="submit" class="btn btn-success btn-block">LOGIN</button><br>
+                             <p style="text-align:center; font-size:12px;">&copy;	{{year}} POST PRO</p>
+
+                         </div>
+                       </div>
+                   </form>
+
+                </div>
+              </div>
+            </div>
+        </div>
+           <div class="col-sm-4">
+           </div>
+       </div>
+     </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<br><br>
+</body>
+</html>
+
+
+<script type="text/javascript">
+  $(function(){
+    $("#id_username").attr({'placeholder':'Username'});
+    $("#id_password").attr({'placeholder':'Password'});
+	})
+</script>

@@ -1,17 +1,21 @@
-<!DOCTYPE HTML>
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>FB Poster</title>
+    <title>POST PRO</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="icon" type="image/png" sizes="64x64" href="{% static 'image/favicon.png' %}">
 
   </head>
   <body>
 
       <!--Bootstrap 4 NavBar Starts-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'home' %}">FB Poster</a>
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'image/navbar-logo.png' %}" width="65" height="28" style="margin-left:50px; margin-right: 70px;" alt=""/>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,29 +23,62 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">POST</a>
+              <a class="nav-link" href="#">FB POST</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">FETCH</a>
+              <a class="nav-link" href="#">TWITTER POST</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                More
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'facebook_page_add' %}">Add Facebook Page</a>
+                <a class="dropdown-item" href="{% url 'facebook_page_list' %}">List Facebook Pages</a>                
+                {% if request.user.facebookaccesstoken.token %}
+                <a class="dropdown-item" href="{% url 'access_token_update' access_token_id=request.user.facebookaccesstoken.id %}">Update Access Token</a>
+                {% else %}
+                <a class="dropdown-item" href="{% url 'access_token_add' %}">Add Access Token</a>
+                {% endif %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Contact</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link">{{ request.user|upper }}</span>
+            </li>
+          </ul>
+
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="btn btn-sm btn-success my-2 my-sm-0">LOGOUT</a>
+          {% endif %}
+
         </div>
       </nav>
       <!--Bootstrap 4 NavBar Ends-->
 
       <!-- Start of Main Content -->
-          <div class="col-sm-12">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8">
               {% block content %} {% endblock content%}
+            </div>
+              <div class="col-sm-2">
+              </div>
           </div>
+        </div>
       <!-- End of Main Content -->
 
 
       <!--Main Footer Starts-->
-
+      <footer class="footer fixed-bottom">
+        <p style="text-align:center; font-size:12px;">&copy;	2019 POST PRO</p>
+      </footer>
       <!--Main Footer Ends-->
 
 

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12"><br>
+          {% if success %}
+          <div class="alert alert-success" role="alert">
+             Operation Completed Successfully!
+           </div>
+          {% elif failure %}
+          <div class="alert alert-danger" role="alert">
+             Error! Try Again!
+           </div>
+          {% else %}
+        <form class="" role="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          <h4 style="text-align: center;">{{title}}</h4><br>
+          {% for field in form %}
+          <div class="row">
+            <div class="col-sm-12">
+            </div>
+
+              <div class="col-sm-4">
+                  <label>{{field.label}}</label>
+              </div>
+              <div class="col-sm-8">
+                  <div class="form-group {% if field.errors %}has-error{% endif %}">
+                      {{ field }} {% if field.errors %}
+                      <span class="help-block">{{ field.errors.as_text }}</span> {% endif %}
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+
+          <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary float-right">Submit</button>
+            </div>
+          </div>
+      </form>
+      {% endif %}
+
+
+  </div>
+</div>
+
+{% endblock content%}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+
+<script>
+  jQuery(".bootstrap-switch").bootstrapSwitch();
+</script>
