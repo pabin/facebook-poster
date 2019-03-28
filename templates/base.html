@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">FB POST</a>
+              <a class="nav-link" href="{% url 'facebook_poster' %}">FB POST</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">TWITTER POST</a>
@@ -37,7 +37,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'facebook_page_add' %}">Add Facebook Page</a>
-                <a class="dropdown-item" href="{% url 'facebook_page_list' %}">List Facebook Pages</a>                
+                <a class="dropdown-item" href="{% url 'facebook_page_list' %}">List Facebook Pages</a>
                 {% if request.user.facebookaccesstoken.token %}
                 <a class="dropdown-item" href="{% url 'access_token_update' access_token_id=request.user.facebookaccesstoken.id %}">Update Access Token</a>
                 {% else %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #Django Apps
     'home',
     'accounts',
+    'poster',
 ]
 
 MIDDLEWARE = [

@@ -4,63 +4,7 @@
 
 <div class="row">
   <div class="col-md-12">
-      <form class="" role="form" method="post">
-          {% csrf_token %}
-          <br>
-        <h3 style="text-align: center;">Enter the Status Message</h3><br>
-        {% for field in form %}
-        <div class="row">
-          <div class="col-md-3">
-          </div>
-
-            <div class="col-sm-2">
-                <label>{{field.label}}</label>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group {% if field.errors %}has-error{% endif %}">
-                    {{ field }} {% if field.errors %}
-                    <span class="help-block">{{ field.errors.as_text }}</span> {% endif %}
-                </div>
-            </div>
-
-            <div class="col-md-3">
-            </div>
-        </div>
-        {% endfor %}
-
-        <div class="row">
-          <div class="col-md-3">
-          </div>
-          <div class="col-md-6">
-              <button type="submit" class="btn btn-primary float-right">Submit</button>
-          </div>
-          <div class="col-md-3">
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-3">
-          </div>
-          <div class="col-md-6">
-            <br>
-            {% if status == 'success' %}
-            <div class="alert alert-success" role="alert">
-              <h5 style="text-align:center;">Status Updated Successfully!</h5>
-            </div>
-            {% elif status == 'failure' %}
-            <div class="alert alert-danger" role="alert">
-              <h5 style="text-align:center;">Error On Status Update!</h5>
-            </div>            
-            {% endif %}
-          </div>
-
-          <div class="col-md-3">
-          </div>
-        </div>
-
-
-    </form>
-
+    <h3>{{ title }}</h3>
   </div>
 </div>
 {% endblock content%}
