@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %} {{ title }} {% endblock title %}
+
+{% block head_block %}
+{% endblock head_block %}
+
 {% block content %}
 
 <div class="row">
@@ -15,7 +20,7 @@
           {% else %}
         <form class="" role="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-          <h4 style="text-align: center;">{{title}}</h4><br>
+          <h4 style="text-align: center;"></h4><br>
           {% for field in form %}
           <div class="row">
             <div class="col-sm-12">
@@ -47,8 +52,16 @@
 
 {% endblock content%}
 
+
+{% block footer_block %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script>
   jQuery(".bootstrap-switch").bootstrapSwitch();
+
+  $(document).ready(function() {
+      $('#multiple_pages').select2();
+  });
 </script>
+{% endblock footer_block%}

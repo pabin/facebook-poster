@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class FacebookPageID(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     page_id = models.CharField(max_length=128)
     added_on = models.DateTimeField(auto_now_add=True)

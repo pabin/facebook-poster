@@ -4,7 +4,39 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h3>{{ title }}</h3>
+    <br>
+    <h5>Post Statistics</h5>
+      <table class="table table-sm table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">SN</th>
+            <th scope="col">Page Name</th>
+            <th scope="col">Post Reach</th>
+            <th scope="col">Posted On</th>
+            <th scope="col">Total Likes</th>
+            <th scope="col">Total Comments</th>
+            <th scope="col">Total Shares</th>
+
+          </tr>
+        </thead>
+        {% if pages %}
+        <tbody>
+          {% for page in pages %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ page.name }}</td>
+            <td>{{ page.page_id }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        {% else %}
+        <tbody>
+          <tr>
+            <th colspan=7 style="text-align:center;">No Records to Show!</th>
+          </tr>
+        </tbody>
+        {% endif %}
+      </table>
   </div>
 </div>
 {% endblock content%}
