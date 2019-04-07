@@ -16,6 +16,7 @@ python manage.py runserver
 
 ### Tokens and Page ID Setup
 Add Token from --> More --> Add Access Token
+
 Add Facebook Pages from --> More --> Add Facebook Page (Enter Name and Page Id)
 
 ### Go to FB POST:

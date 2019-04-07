@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.db import transaction
 import datetime
 
 from .forms import (
@@ -182,10 +184,27 @@ class FacebookPageListView(LoginRequiredMixin, View):
     template_name = 'accounts/fb_page_list.html'
 
     def get(self, request):
-        pages = FacebookPageID.objects.all()
+        pages = FacebookPageID.objects.filter(is_archived=False)
 
         context = {
         'title': 'Facebook Pages',
         'pages': pages,
         }
         return render(request, self.template_name, context)
+
+
+class FacebookPageDeleteView(LoginRequiredMixin, View):
+
+    def get(self, request, page_id):
+        try:
+            with transaction.atomic():
+                page = FacebookPageID.objects.get(id=page_id)
+                page.is_archived = True
+                page.save()
+                messages.success(request, page.name+ ' Page Deleted Successfully!', extra_tags='success')
+
+        except Exception as e:
+            print('Exception: ', e)
+            messages.error(request, 'Error! Selected Page doesnot exist,', extra_tags='danger')
+
+        return HttpResponseRedirect(reverse('facebook_page_list'))

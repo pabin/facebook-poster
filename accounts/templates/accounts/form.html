@@ -1,54 +1,70 @@
 {% extends "base.html" %}
+{% block title %} {{ title }} {% endblock title %}
+
+{% block head_block %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+{% endblock head_block %}
+
 
 {% block content %}
 
 <div class="row">
   <div class="col-md-12"><br>
-          {% if success %}
-          <div class="alert alert-success" role="alert">
-             Operation Completed Successfully!
-           </div>
-          {% elif failure %}
-          <div class="alert alert-danger" role="alert">
-             Error! Try Again!
-           </div>
-          {% else %}
-        <form class="" role="form" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-          <h4 style="text-align: center;">{{title}}</h4><br>
-          {% for field in form %}
-          <div class="row">
-            <div class="col-sm-12">
-            </div>
 
-              <div class="col-sm-4">
-                  <label>{{field.label}}</label>
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="text-align:center;">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-              <div class="col-sm-8">
-                  <div class="form-group {% if field.errors %}has-error{% endif %}">
-                      {{ field }} {% if field.errors %}
-                      <span class="help-block">{{ field.errors.as_text }}</span> {% endif %}
+            {% endfor %}
+
+            <form class="" role="form" method="post" enctype="multipart/form-data" {% if success %}style="display:none;"{% endif %}>
+                {% csrf_token %}
+                <br>
+              {% for field in form %}
+              <div class="row">
+                <div class="col-sm-12">
+                </div>
+
+                  <div class="col-sm-4">
+                      <label>{{field.label}}</label>
+                  </div>
+                  <div class="col-sm-8">
+                      <div class="form-group {% if field.errors %}has-error{% endif %}">
+                          {{ field }} {% if field.errors %}
+                          <span class="help-block">{{ field.errors.as_text }}</span> {% endif %}
+                      </div>
                   </div>
               </div>
-          </div>
-          {% endfor %}
+              {% endfor %}
 
-          <div class="row">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
-            </div>
-          </div>
-      </form>
-      {% endif %}
-
+              <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                </div>
+              </div>
+          </form>
 
   </div>
 </div>
 
 {% endblock content%}
 
+{% block footer_block %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script>
   jQuery(".bootstrap-switch").bootstrapSwitch();
+
+  $(document).ready(function() {
+      $('#id_multiple_pages').select2();
+      $("#id_multiple_pages").attr({'placeholder':'Select Multiple Pages'})
+
+  });
 </script>
+{% endblock footer_block%}

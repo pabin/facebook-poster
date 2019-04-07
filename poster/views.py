@@ -3,6 +3,8 @@ from django.views import View
 import facebook
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .forms import (
     StatusUpdateForm,
@@ -58,7 +60,7 @@ class StatusUpdateView(LoginRequiredMixin, View):
                     selected_pages = FacebookPageID.objects.filter(user=request.user)
 
                 else:
-                    messages.error(request, 'Error! Empty Partner Field!')
+                    messages.error(request, 'Error! Please Select at least One Page to Post', extra_tags='warning')
                     return render(request, self.template_name, context)
 
 
@@ -88,15 +90,14 @@ class StatusUpdateView(LoginRequiredMixin, View):
                             url = image_url,
                             message=msg)
 
-
-                print('Success')
-                context['status'] = 'success'
+                context['success'] = True
+                messages.success(request, 'Status Message Posted Successfully!', extra_tags='success')
                 return render(request, self.template_name, context)
 
             except Exception as e:
                 print('Exception', e)
-                context['status'] = 'failure'
+                messages.error(request, 'Error! on Status Message Posting!', extra_tags='danger')
                 return render(request, self.template_name, context)
 
-        context['status'] = 'failure'
+        messages.error(request, 'Error! Invalid Form Submitted!', extra_tags='warning')
         return render(request, self.template_name, context)

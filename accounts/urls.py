@@ -7,6 +7,7 @@ from .views import (
     FacebookAccessTokenAddView,
     FacebookAccessTokenUpdateView,
     FacebookPageListView,
+    FacebookPageDeleteView
 )
 
 urlpatterns = [
@@ -17,5 +18,6 @@ urlpatterns = [
     path('access-token/add/', FacebookAccessTokenAddView.as_view(), name='access_token_add'),
     path('access-token/update/<int:access_token_id>/', FacebookAccessTokenUpdateView.as_view(), name='access_token_update'),
     path('facebook-page/list/', FacebookPageListView.as_view(), name='facebook_page_list'),
+    path('fb-page-/delete/<int:page_id>/', FacebookPageDeleteView.as_view(), name='fb_page_delete'),
 
 ]
