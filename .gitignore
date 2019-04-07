@@ -7,7 +7,7 @@ tokens.py
 
 *node_modules*
 *static*
-
+*whitenoise.storage.CompressedManifestStaticFilesStorage*
 *.less
 *.scss
 

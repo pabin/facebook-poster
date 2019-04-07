@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '*g4wb%(3ac1)-d%ns0ub#4^v&5_2q-flrrmac$*k=abm&%-$mn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['uniposter.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -130,3 +131,9 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
+
+#  Add configuration for static files storage using whitenoise
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
