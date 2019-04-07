@@ -24,8 +24,10 @@ class StatusUpdateForm(forms.Form):
             })
 
         self.fields['all_page'].widget.attrs.update({
-            # 'class': 'bootstrap-switch',
-            'data-on-text': "YES",
-            'data-off-text': "NO",
-            # 'checked': 'checked',
+            'class': 'checkbox-inline',
+            'data-toggle': 'toggle',
+            'data-onstyle': "success",
+            'data-offstyle': "danger",
+            'data-on': "Yes",
+            'data-off': "No",
         })

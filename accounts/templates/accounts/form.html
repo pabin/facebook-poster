@@ -4,6 +4,7 @@
 {% block head_block %}
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 {% endblock head_block %}
 
@@ -55,15 +56,23 @@
 {% endblock content%}
 
 {% block footer_block %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <script>
-  jQuery(".bootstrap-switch").bootstrapSwitch();
+  // jQuery(".bootstrap-switch").bootstrapSwitch();
+  $(function() {
+    $('#id_all_page').bootstrapToggle();
+  })
 
   $(document).ready(function() {
-      $('#id_multiple_pages').select2();
-      $("#id_multiple_pages").attr({'placeholder':'Select Multiple Pages'})
+      $('#id_multiple_pages').select2({
+        placeholder: " Select Multiple Pages"
+    });
+
+      $("#id_message").attr({'placeholder':'Happy New Year!'})
+      $("#id_image_url").attr({'placeholder':'https://example.org/images/example.png'})
 
   });
 </script>

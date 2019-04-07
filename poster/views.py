@@ -9,7 +9,6 @@ from django.urls import reverse
 from .forms import (
     StatusUpdateForm,
 )
-from .tokens import token, page_id
 
 
 from accounts.models import (
