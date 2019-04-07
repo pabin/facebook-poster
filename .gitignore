@@ -6,6 +6,7 @@ __pycache__/
 tokens.py
 
 *node_modules*
+*static*
 
 *.less
 *.scss
