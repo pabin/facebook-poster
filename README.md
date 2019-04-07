@@ -11,14 +11,16 @@ pip install -r requirements.txt
 cd fbposter
 
 python manage.py migrate
+
 python manage.py runserver
 
 ### Tokens and Page ID Setup
 Add Token from --> More --> Add Access Token
 Add Facebook Pages from --> More --> Add Facebook Page (Enter Name and Page Id)
 
-####Go to FB POST:
+### Go to FB POST:
 Enter Message or Image URL
+
 Select All Pages to Post on all listed Pages or Select Specific Page to Post
 
 
