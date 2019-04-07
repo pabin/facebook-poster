@@ -16,7 +16,7 @@ class StatusUpdateForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         self.fields['multiple_pages'].choices = [
-            (a.id, a) for a in FacebookPageID.objects.filter(user=user)]
+            (a.id, a) for a in FacebookPageID.objects.filter(user=user, is_archived=False)]
 
         for _, field in self.fields.items():
             field.widget.attrs.update({

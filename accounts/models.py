@@ -20,14 +20,5 @@ class FacebookAccessToken(models.Model):
     token = models.CharField(max_length=255)
     added_on = models.DateTimeField(auto_now_add=True)
 
-
-    def save(self, *args, **kwargs):
-        if FacebookAccessToken.objects.exists() and not self.pk:
-            # if you'll not check for self.pk
-            # then error will also raised in update of exists model
-            raise ValidationError(
-                'There can be only One Access Token')
-        return super(FacebookAccessToken, self).save(*args, **kwargs)
-
     def __str__(self):
         return str(self.added_on)

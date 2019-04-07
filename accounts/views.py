@@ -106,10 +106,11 @@ class FacebookPageIDAddView(LoginRequiredMixin, View):
 
             page.save()
 
-            context['success'] = True
-            return render(request, self.template_name, context)
+            messages.success(request, 'New Facebook Page Added Successfully!', extra_tags='success')
+            return HttpResponseRedirect(reverse('facebook_page_list'))
 
         context['failure'] = True
+        messages.error(request, 'Error! on Facebook Page Addition!', extra_tags='danger')
         return render(request, self.template_name, context)
 
 
@@ -151,8 +152,7 @@ class FacebookAccessTokenUpdateView(LoginRequiredMixin, View):
     title = 'Update Facebook Access Token'
 
     def get(self, request, access_token_id):
-        access_token = get_object_or_404(FacebookAccessToken, id=access_token_id)
-        form = self.form_class(instance=access_token)
+        form = self.form_class()
 
         context = {
             'title': self.title,
@@ -184,7 +184,7 @@ class FacebookPageListView(LoginRequiredMixin, View):
     template_name = 'accounts/fb_page_list.html'
 
     def get(self, request):
-        pages = FacebookPageID.objects.filter(is_archived=False)
+        pages = FacebookPageID.objects.filter(is_archived=False, user=request.user)
 
         context = {
         'title': 'Facebook Pages',
