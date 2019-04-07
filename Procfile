@@ -1,2 +1,2 @@
 
-web: gunicorn uniposter.wsgi --log-file -
+web: gunicorn fbposter.wsgi --log-file -
