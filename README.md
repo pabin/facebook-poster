@@ -11,25 +11,17 @@ pip install -r requirements.txt
 cd fbposter
 
 python manage.py migrate
+python manage.py runserver
 
 ### Tokens and Page ID Setup
-Create tokens.py file inside home app
+Add Token from --> More --> Add Access Token
+Add Facebook Pages from --> More --> Add Facebook Page (Enter Name and Page Id)
 
-create token dictionary as below:
+####Go to FB POST:
+Enter Message or Image URL
+Select All Pages to Post on all listed Pages or Select Specific Page to Post
 
-token = {
-  "access_token" : "<Access Token Created from Facebook App at
-   https://developers.facebook.com/"
-}
 
-Create page_id dictionary as below:
-
-page_id = {
-  "pid_page1": "<Facebook Page1 ID>",
-  "pid_page2": "<Facebook Page2 ID>",
-}
-
-python manage.py runserver
 
 ### GET EXTENDED TOKEN FOR TWO MONTH USING FOLLOWING URL
 "https://graph.facebook.com/v2.10/oauth/access_token?grant_type=fb_exchange_token&client_id={app_id}&client_secret={app_secret}&fb_exchange_token={short_lived_token}"
