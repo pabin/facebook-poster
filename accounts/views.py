@@ -208,3 +208,37 @@ class FacebookPageDeleteView(LoginRequiredMixin, View):
             messages.error(request, 'Error! Selected Page doesnot exist,', extra_tags='danger')
 
         return HttpResponseRedirect(reverse('facebook_page_list'))
+
+
+class FacebookPageDisableView(LoginRequiredMixin, View):
+
+    def get(self, request, page_id):
+        try:
+            with transaction.atomic():
+                page = FacebookPageID.objects.get(id=page_id)
+                page.is_active = False
+                page.save()
+                messages.success(request, page.name+ ' Page Disabled Successfully!', extra_tags='success')
+
+        except Exception as e:
+            print('Exception: ', e)
+            messages.error(request, 'Error! Selected Page doesnot exist,', extra_tags='danger')
+
+        return HttpResponseRedirect(reverse('facebook_page_list'))
+
+
+class FacebookPageEnableView(LoginRequiredMixin, View):
+
+    def get(self, request, page_id):
+        try:
+            with transaction.atomic():
+                page = FacebookPageID.objects.get(id=page_id)
+                page.is_active = True
+                page.save()
+                messages.success(request, page.name+ ' Page Enabled Successfully!', extra_tags='success')
+
+        except Exception as e:
+            print('Exception: ', e)
+            messages.error(request, 'Error! Selected Page doesnot exist,', extra_tags='danger')
+
+        return HttpResponseRedirect(reverse('facebook_page_list'))

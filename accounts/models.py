@@ -10,6 +10,7 @@ class FacebookPageID(models.Model):
     page_id = models.CharField(max_length=128)
     added_on = models.DateTimeField(auto_now_add=True)
     is_archived = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.name)

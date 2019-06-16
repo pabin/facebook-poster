@@ -47,7 +47,7 @@ class StatusUpdateView(LoginRequiredMixin, View):
                 multiple_pages = form.cleaned_data.get('multiple_pages')
 
                 if all_page and not multiple_pages:
-                    selected_pages = FacebookPageID.objects.filter(user=request.user, is_archived=False)
+                    selected_pages = FacebookPageID.objects.filter(user=request.user, is_archived=False, is_active=True)
 
                 elif multiple_pages and not all_page:
                     selected_pages = []
@@ -56,7 +56,7 @@ class StatusUpdateView(LoginRequiredMixin, View):
                         selected_pages.append(pages)
 
                 elif all_page and multiple_pages:
-                    selected_pages = FacebookPageID.objects.filter(user=request.user, is_archived=False)
+                    selected_pages = FacebookPageID.objects.filter(user=request.user, is_archived=False, is_active=True)
 
                 else:
                     messages.error(request, 'Error! Please Select at least One Page to Post', extra_tags='warning')
