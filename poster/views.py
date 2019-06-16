@@ -5,11 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+import requests
+import json
 
 from .forms import (
     StatusUpdateForm,
 )
-
 
 from accounts.models import (
     FacebookPageID,
@@ -43,8 +44,10 @@ class StatusUpdateView(LoginRequiredMixin, View):
             try:
                 msg = form.cleaned_data.get('message')
                 image_url = form.cleaned_data.get('image_url')
+                video_url = form.cleaned_data.get('video_url')
                 all_page = form.cleaned_data.get('all_page')
                 multiple_pages = form.cleaned_data.get('multiple_pages')
+                video_description = form.cleaned_data.get('video_description')
 
                 if all_page and not multiple_pages:
                     selected_pages = FacebookPageID.objects.filter(user=request.user, is_archived=False, is_active=True)
@@ -76,18 +79,31 @@ class StatusUpdateView(LoginRequiredMixin, View):
 
                     graph = facebook.GraphAPI(page_access_token)
 
-                    if msg and not image_url:
+                    if msg and not image_url and not video_url:
                         status = graph.put_object(
                             parent_object = "me",
                             connection_name = "feed",
                             message=msg)
 
-                    elif msg and image_url:
+                    elif msg and image_url and not video_url:
                         status = graph.put_object(
                             parent_object = "me",
                             connection_name = "photos",
                             url = image_url,
                             message=msg)
+                    elif msg and not image_url and video_url:
+                        fburl = 'https://graph-video.facebook.com/'+ fb_page.page_id + '/videos/?access_token='+str(token_object.token)
+                        payload = {'name': '%s' %(msg), 'description': '%s' %(video_description), 'file_url': '%s' %(video_url)}
+                        flag = requests.post(fburl, data=payload).text
+                        print(flag)
+                        fb_res = json.loads(flag)
+                        print(fb_res, 'fb_res...')
+
+                        # status = graph.put_object(
+                        #     parent_object = "me/videos",
+                        #     connection_name = "videos",
+                        #     url = video_url,
+                        #     message=msg)
 
                 context['success'] = True
                 messages.success(request, 'Status Message Posted Successfully!', extra_tags='success')

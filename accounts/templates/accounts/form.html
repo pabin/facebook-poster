@@ -70,11 +70,21 @@
       $('#id_multiple_pages').select2({
         placeholder: " Select Multiple Pages"
     });
-
       $("#id_message").attr({'placeholder':'Happy New Year!'})
-      $("#id_image_url").attr({'placeholder':'https://eg.org/img/me.png'})
+      $("#id_image_url").attr({'placeholder':'Image URL'})
+      $("#id_video_url").attr({'placeholder':'Video URL'})
+      $("#id_video_description").attr({'placeholder':'Video Description'})      
       $("#id_token").attr({'placeholder':'GH87GDS5357887HUTRCBCDSEWR98HY09OP2432'})
-
   });
+
+  // $(function() {
+  //   $('#id_all_page').on('change', function(){
+  //     console.log('hey...');
+  //     $('#id_multiple_pages').hide()
+  //
+  //   });
+  // })
+
+
 </script>
 {% endblock footer_block%}

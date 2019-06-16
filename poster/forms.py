@@ -5,8 +5,10 @@ from accounts.models import (
 )
 
 class StatusUpdateForm(forms.Form):
-    message = forms.CharField(label='Message')
+    message = forms.CharField(label='Message*')
     image_url = forms.URLField(label='Image URL', required=False)
+    video_url = forms.URLField(label='Video URL', required=False)
+    video_description = forms.CharField(label='Video Description', required=False)
     all_page = forms.BooleanField(label="Post on All Page", required=False)
     multiple_pages = forms.MultipleChoiceField(label='Select Pages to Post', required=False)
 
