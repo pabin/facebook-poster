@@ -13,5 +13,6 @@ urlpatterns = [
     path('fb-page-/delete/<int:page_id>/', FacebookPageDeleteView.as_view(), name='fb_page_delete'),
     path('fb-page-/disable/<int:page_id>/', FacebookPageDisableView.as_view(), name='fb_page_disable'),
     path('fb-page-/enable/<int:page_id>/', FacebookPageEnableView.as_view(), name='fb_page_enable'),
+    path('facebook-extended-token/create/', ExtendedAccessTokenCreateView.as_view(), name='fb_extended_token'),
 
 ]

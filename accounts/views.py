@@ -7,12 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db import transaction
 import datetime
+import requests
+import json
 
-from .forms import (
-    UserLoginForm,
-    FacebookPageIDAddForm,
-    FacebookAccessTokenAddForm,
-)
+from .forms import *
 
 from .models import (
     FacebookPageID,
@@ -140,9 +138,11 @@ class FacebookAccessTokenAddView(LoginRequiredMixin, View):
             access_token.save()
 
             context['success'] = True
+            messages.error(request, 'Token Successfully Added ', extra_tags='success')
             return render(request, self.template_name, context)
 
         context['failure'] = True
+        messages.error(request, 'Error on Token Addition! ', extra_tags='danger')
         return render(request, self.template_name, context)
 
 
@@ -174,9 +174,11 @@ class FacebookAccessTokenUpdateView(LoginRequiredMixin, View):
             instance = form.save()
 
             context['success'] = True
+            messages.error(request, 'Token Successfully Updated ', extra_tags='success')
             return render(request, self.template_name, context)
 
         context['failure'] = True
+        messages.error(request, 'Error on Token Update! ', extra_tags='danger')                    
         return render(request, self.template_name, context)
 
 
@@ -242,3 +244,50 @@ class FacebookPageEnableView(LoginRequiredMixin, View):
             messages.error(request, 'Error! Selected Page doesnot exist,', extra_tags='danger')
 
         return HttpResponseRedirect(reverse('facebook_page_list'))
+
+
+class ExtendedAccessTokenCreateView(LoginRequiredMixin, View):
+    template_name = 'accounts/form.html'
+    form_class = ExtendedAccessTokenCreateForm
+    title = 'Create Extended Facebook Access Token'
+
+    def get(self, request):
+        form = self.form_class()
+        context = {
+            'form': form,
+            'title': self.title,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        url = "https://graph.facebook.com/v2.10/oauth/access_token"
+        form = self.form_class(request.POST)
+        context = {
+            'form': form,
+            'title': self.title,
+        }
+
+        if form.is_valid():
+            app_id = form.cleaned_data.get('app_id')
+            app_secret = form.cleaned_data.get('app_secret')
+            short_lived_token = form.cleaned_data.get('short_lived_token')
+
+            params = {
+            'grant_type': 'fb_exchange_token',
+            'client_id': app_id,
+            'client_secret': app_secret,
+            'fb_exchange_token': short_lived_token,
+            }
+            r = requests.get(url, params)
+            response = r.json()
+            access_token = response['access_token']
+
+            context['success'] = True
+            context['token'] = True
+
+            messages.error(request, 'Your Token \n'+access_token, extra_tags='success')
+            return render(request, self.template_name, context)
+
+        context['failure'] = True
+        messages.error(request, 'Error on Token Generation', extra_tags='danger')
+        return render(request, self.template_name, context)

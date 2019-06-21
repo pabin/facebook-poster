@@ -92,7 +92,8 @@ class StatusUpdateView(LoginRequiredMixin, View):
                             url = image_url,
                             message=msg)
                     elif msg and not image_url and video_url:
-                        fburl = 'https://graph-video.facebook.com/'+ fb_page.page_id + '/videos/?access_token='+str(token_object.token)
+                        print(token_object.token, 'this is my token \n')
+                        fburl = 'https://graph-video.facebook.com/v3.3/'+ fb_page.page_id + '/videos/?access_token='+str(token_object.token)
                         payload = {'name': '%s' %(msg), 'description': '%s' %(video_description), 'file_url': '%s' %(video_url)}
                         flag = requests.post(fburl, data=payload).text
                         print(flag)

@@ -46,3 +46,17 @@ class FacebookAccessTokenAddForm(forms.ModelForm):
             field.widget.attrs.update({
                 'class': 'form-control'
             })
+
+
+class ExtendedAccessTokenCreateForm(forms.Form):
+    app_id = forms.CharField(label="App ID")
+    app_secret = forms.CharField(label="App Secret")
+    short_lived_token = forms.CharField(label="Short Lived Token")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for _, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })
