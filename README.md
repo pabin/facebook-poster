@@ -1,6 +1,6 @@
 # FB Poster Setup
 
-git clone https://github.com/pabin/fbposter
+git clone https://github.com/pabin/facebook-poster.git
 
 virtualenv -p python3 env
 
